@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,8 +39,15 @@ public class PersonController {
 	
 	@RequestMapping(value = "/persons", method = RequestMethod.GET,
 			produces = "application/json", consumes = "application/json")
-	public ResponseEntity<List<Person>> list(){
+	public ResponseEntity<List<Person>> getAll(){
 		List<Person> listPersons = personService.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(listPersons);
+	}
+	
+	@RequestMapping(value = "/persons/{id}", method = RequestMethod.GET,
+			produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Person> getById(@PathVariable Long id){
+		Person person = personService.findById(id).get();
+		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
 }
