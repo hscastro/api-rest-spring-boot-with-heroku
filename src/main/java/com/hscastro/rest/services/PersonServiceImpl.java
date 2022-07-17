@@ -27,12 +27,6 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person update(Long id, Person p) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<Person> findById(Long id) {
 		Optional<Person> person = personReposiory.findById(id);
 		if(person.isPresent()) {
@@ -44,6 +38,23 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<Person> findAll() {
 		return personReposiory.findAll();
+	}
+	
+	@Override
+	public Person update(Long id, Person p) {
+		Person person_ = personReposiory.findById(id).get();
+		if(person_ != null) {
+			person_.setName(p.getName());
+			person_.setCpf(p.getCpf());
+			person_.setRg(p.getRg());
+			person_.setSexo(p.getSexo());
+			person_.setRaca(p.getName());
+			person_.setCelular(p.getCelular());
+			person_.setDateNascimento(p.getDateNascimento());
+			personReposiory.save(person_);
+			return person_;
+		}
+		throw new IllegalArgumentException("Person não pode ser atualizado");
 	}
 
 }

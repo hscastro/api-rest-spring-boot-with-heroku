@@ -50,4 +50,11 @@ public class PersonController {
 		Person person = personService.findById(id).get();
 		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
+	
+	@RequestMapping(value = "/persons/{id}", method = RequestMethod.PUT,
+			produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Person> update(@PathVariable Long id, @RequestBody Person p){
+		Person person = personService.update(id, p);
+		return ResponseEntity.status(HttpStatus.OK).body(person);
+	}
 }
