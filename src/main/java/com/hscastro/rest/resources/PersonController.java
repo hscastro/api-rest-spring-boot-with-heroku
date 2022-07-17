@@ -1,5 +1,7 @@
 package com.hscastro.rest.resources;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,5 +34,12 @@ public class PersonController {
 	public ResponseEntity<Person> create(@RequestBody Person person){
 		Person person_ = personService.save(person);
 		return ResponseEntity.status(HttpStatus.CREATED).body(person_);
+	}
+	
+	@RequestMapping(value = "/persons", method = RequestMethod.GET,
+			produces = "application/json", consumes = "application/json")
+	public ResponseEntity<List<Person>> list(){
+		List<Person> listPersons = personService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(listPersons);
 	}
 }
