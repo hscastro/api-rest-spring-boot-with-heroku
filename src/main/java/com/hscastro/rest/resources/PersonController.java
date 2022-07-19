@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hscastro.rest.domain.Person;
+import com.hscastro.rest.dto.PersonDTO;
 import com.hscastro.rest.services.PersonService;
 
 @RestController
@@ -21,7 +22,6 @@ public class PersonController {
 	private PersonService personService;
 
 	public PersonController(PersonService personService) {
-		super();
 		this.personService = personService;
 	}
 
@@ -32,8 +32,8 @@ public class PersonController {
 	
 	@RequestMapping(value = "/persons", method = RequestMethod.POST,
 			produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Person> create(@RequestBody Person person){
-		Person person_ = personService.save(person);
+	public ResponseEntity<Person> create(@RequestBody PersonDTO personDTO){
+		Person person_ = personService.save(personDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(person_);
 	}
 	
@@ -53,8 +53,8 @@ public class PersonController {
 	
 	@RequestMapping(value = "/persons/{id}", method = RequestMethod.PUT,
 			produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Person> update(@PathVariable Long id, @RequestBody Person p){
-		Person person = personService.update(id, p);
+	public ResponseEntity<Person> update(@PathVariable Long id, @RequestBody PersonDTO personDTO){
+		Person person = personService.update(id, personDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
 }

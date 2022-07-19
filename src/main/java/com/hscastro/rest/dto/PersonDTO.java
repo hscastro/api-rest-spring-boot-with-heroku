@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonDTO {
