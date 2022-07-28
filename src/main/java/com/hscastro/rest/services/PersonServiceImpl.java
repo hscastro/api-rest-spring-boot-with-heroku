@@ -4,52 +4,65 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.hscastro.rest.domain.Person;
 import com.hscastro.rest.dto.PersonDTO;
 import com.hscastro.rest.exceptions.ObjectNotFoundException;
 import com.hscastro.rest.repositories.PersonReposiory;
 
 @Service
-public class PersonServiceImpl implements PersonService {
-
-	private PersonReposiory personReposiory;
+public class PersonServiceImpl implements PersonService {    
 	
-	@Autowired
+	private PersonReposiory personReposiory;
+		
 	private ModelMapper mapper;
-
+	
+	private Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
 	
 	public PersonServiceImpl(PersonReposiory personReposiory) {
 		this.personReposiory = personReposiory;
+		mapper = new ModelMapper();
+		logger.info("Starting application");
 	}
 
 	@Override
 	public Person save(PersonDTO personDTO) {
 		if(personDTO != null) {
-			return personReposiory.save(mapper.map(personDTO, Person.class));
+			Person person_ = personReposiory.save(mapper.map(personDTO, Person.class));
+			logger.info("Saving one Person na base de dados - ", person_);
+			return person_;			
 		}	
-		throw new ObjectNotFoundException("O objeto person está nulo");
+		ObjectNotFoundException exception = new ObjectNotFoundException("O objeto person está nulo");
+		logger.info("Exception - ", exception.getMessage());
+		throw exception;
 	}
 
 	@Override
 	public Optional<Person> findById(Long id) {
 		Optional<Person> person = personReposiory.findById(id);
+		logger.info("Finding one Person by Id - ", person);
 		if(person.isPresent()) {
+			logger.info("Finding one Person by Id - ", person);
 			return person;
 		}
-		throw new ObjectNotFoundException("Person não encontrado");
+		ObjectNotFoundException exception = new ObjectNotFoundException("Person não encontrado");
+		logger.info("Exception - ", exception.getMessage());
+		throw exception;
 	}
 
 	@Override
 	public List<Person> findAll() {
-		return personReposiory.findAll();
+		List<Person> list = personReposiory.findAll();
+		logger.info("Returning the list of Persons - ", list);
+		return list;
 	}
 	
 	@Override
 	public Person update(Long id, PersonDTO personDTO) {
 		Person person_ = personReposiory.findById(id).get();
+		logger.info("Finding one Person by Id for update - ", person_);
 		if(person_ != null) {
 			person_.setName(personDTO.getName());
 			person_.setCpf(personDTO.getCpf());
@@ -57,17 +70,22 @@ public class PersonServiceImpl implements PersonService {
 			person_.setSexo(personDTO.getSexo());
 			person_.setRaca(personDTO.getName());
 			person_.setCelular(personDTO.getCelular());
-			person_.setDateNascimento(personDTO.getDateNascimento());			
-			return personReposiory.save(mapper.map(personDTO, Person.class));
+			person_.setDateNascimento(personDTO.getDateNascimento());	
+			personReposiory.save(person_);
+			logger.info("Update the dados of Person by Id - ", person_);
+			return person_;
 		}
-		throw new IllegalArgumentException("Person não pode ser atualizado");
+		ObjectNotFoundException exception = new ObjectNotFoundException("Person não pode ser atualizado");
+		logger.info("Exception - ", exception.getMessage());
+		throw exception;
 	}
 	
 	public void delete(Long id) {
 		Optional<Person> person = personReposiory.findById(id);	
+		logger.info("Finding one Person by Id for delete - ", person);
 		if(person.isPresent()) {
 			personReposiory.deleteById(id);
+			logger.info("Person delete with success");
 		}		
 	}
-
 }
