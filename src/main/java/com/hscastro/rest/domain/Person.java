@@ -9,17 +9,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hscastro.rest.dto.PersonDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Setter @Getter
+@AllArgsConstructor @NoArgsConstructor
 @Entity
 public class Person implements Serializable {	
 
@@ -40,15 +42,27 @@ public class Person implements Serializable {
 	
 	@Column(name = "sexo", nullable = true, length = 20)
 	private String sexo;
-	
-	@Column(name = "raca", nullable = false, length = 50)
-	private String raca;
-	
+		
 	@Column(name = "celular", nullable = false, length = 20)
 	private String celular;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "dateNascimento", nullable = false, length = 20)
+	@Column(name = "dateNascimento", nullable = true, length = 20)
 	private LocalDate dateNascimento;
 	
+	
+	
+	private static ModelMapper mapper = new ModelMapper();
+	
+	public static PersonDTO personToDTO(Person person) {
+		return mapper.map(person, PersonDTO.class);
+	}
+
+	public static ModelMapper getMapper() {
+		return mapper;
+	}
+
+	public static void setMapper(ModelMapper mapper) {
+		Person.mapper = mapper;
+	}
 }
