@@ -52,17 +52,17 @@ public class Person implements Serializable {
 	
 	
 	
-	private static ModelMapper mapper = new ModelMapper();
-	
-	public static PersonDTO personToDTO(Person person) {
-		return mapper.map(person, PersonDTO.class);
-	}
-
-	public static ModelMapper getMapper() {
-		return mapper;
-	}
-
-	public static void setMapper(ModelMapper mapper) {
-		Person.mapper = mapper;
-	}
+//	private static ModelMapper mapper = new ModelMapper();
+//	
+//	public static PersonDTO personToDTO(Person person) {
+//		return mapper.map(person, PersonDTO.class);
+//	}
+//
+//	public static ModelMapper getMapper() {
+//		return mapper;
+//	}
+//
+//	public static void setMapper(ModelMapper mapper) {
+//		Person.mapper = mapper;
+//	}
 }

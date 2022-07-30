@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hscastro.rest.domain.Person;
 import com.hscastro.rest.dto.PersonDTO;
 import com.hscastro.rest.exceptions.ObjectNotFoundException;
+import com.hscastro.rest.mappers.MapperGenerico;
 import com.hscastro.rest.repositories.PersonReposiory;
 
 @Service
@@ -26,7 +27,8 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public Person save(PersonDTO personDTO) {
 		if(personDTO != null) {
-			Person person_ = personReposiory.save(PersonDTO.DTOtoPerson(personDTO));
+			//Person person_ = personReposiory.save(PersonDTO.DTOtoPerson(personDTO));
+			Person person_ = personReposiory.save(MapperGenerico.parseObject(personDTO, Person.class));
 			logger.info("Saving one Person na base de dados - ", person_);
 			return person_;			
 		}	
@@ -60,7 +62,8 @@ public class PersonServiceImpl implements PersonService {
 		Person person_ = personReposiory.findById(id).get();
 		logger.info("Finding one Person by Id for update - ", person_);
 		if(person_ != null) {
-			Person per = PersonDTO.DTOtoPerson(personDTO);
+			//Person per = PersonDTO.DTOtoPerson(personDTO);
+			Person per = MapperGenerico.parseObject(personDTO, Person.class);			
 			person_.setName(per.getName());
 			person_.setCpf(per.getCpf());
 			person_.setRg(per.getRg());
