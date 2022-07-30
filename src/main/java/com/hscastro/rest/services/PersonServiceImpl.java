@@ -3,7 +3,6 @@ package com.hscastro.rest.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,21 +15,18 @@ import com.hscastro.rest.repositories.PersonReposiory;
 public class PersonServiceImpl implements PersonService {    
 	
 	private PersonReposiory personReposiory;
-		
-	private ModelMapper mapper;
-	
+			
 	private Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
 	
 	public PersonServiceImpl(PersonReposiory personReposiory) {
 		this.personReposiory = personReposiory;
-		mapper = new ModelMapper();
 		logger.info("Starting application");
 	}
 
 	@Override
 	public Person save(PersonDTO personDTO) {
 		if(personDTO != null) {
-			Person person_ = personReposiory.save(mapper.map(personDTO, Person.class));
+			Person person_ = personReposiory.save(PersonDTO.DTOtoPerson(personDTO));
 			logger.info("Saving one Person na base de dados - ", person_);
 			return person_;			
 		}	
@@ -64,13 +60,13 @@ public class PersonServiceImpl implements PersonService {
 		Person person_ = personReposiory.findById(id).get();
 		logger.info("Finding one Person by Id for update - ", person_);
 		if(person_ != null) {
-			person_.setName(personDTO.getName());
-			person_.setCpf(personDTO.getCpf());
-			person_.setRg(personDTO.getRg());
-			person_.setSexo(personDTO.getSexo());
-			person_.setRaca(personDTO.getName());
-			person_.setCelular(personDTO.getCelular());
-			person_.setDateNascimento(personDTO.getDateNascimento());	
+			Person per = PersonDTO.DTOtoPerson(personDTO);
+			person_.setName(per.getName());
+			person_.setCpf(per.getCpf());
+			person_.setRg(per.getRg());
+			person_.setSexo(per.getSexo());
+			person_.setCelular(per.getCelular());
+			person_.setDateNascimento(per.getDateNascimento());	
 			personReposiory.save(person_);
 			logger.info("Update the dados of Person by Id - ", person_);
 			return person_;

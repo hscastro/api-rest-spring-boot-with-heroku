@@ -2,6 +2,10 @@ package com.hscastro.rest.dto;
 
 import java.time.LocalDate;
 
+import org.modelmapper.ModelMapper;
+
+import com.hscastro.rest.domain.Person;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +21,12 @@ public class PersonDTO {
 	private String cpf;
 	private String rg;	
 	private String sexo;	
-	private String raca;
 	private String celular;	
 	private LocalDate dateNascimento;
+	
+	private static ModelMapper mapper = new ModelMapper();
+	
+	public static Person DTOtoPerson(PersonDTO personDTO) {
+		return mapper.map(personDTO, Person.class);
+	}
 }
