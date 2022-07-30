@@ -1,7 +1,9 @@
 package com.hscastro.rest.services;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,16 @@ import com.hscastro.rest.repositories.PersonReposiory;
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
 	
+	private static final String CELULAR = "9 99999990";
+
+	private static final String RG = "88888888880";
+
+	private static final String CPF = "99999999990";
+
+	private static final long ID = 1L;
+
+	private static final String FIRST_NAME_TEST0 = "First Name Test0";
+
 	MockPerson input;
 	
 	@InjectMocks
@@ -29,17 +41,20 @@ class PersonServiceTest {
 	
 	@Mock
 	private PersonReposiory repository;
+	
+	private Person person;
 
 	
 	@BeforeEach
 	void setUpMocks() throws Exception {
 		input = new MockPerson();
+		person = new Person(ID, FIRST_NAME_TEST0, CPF, RG, CPF, CELULAR, null);
 		MockitoAnnotations.openMocks(this);
 	}
 	
 
 	@Test
-	void testFindById() {
+	void testWhenFindById() {
 		Person person = input.mockEntity();
 		person.setId(1L);
 		
@@ -47,12 +62,29 @@ class PersonServiceTest {
 		
 		Person response = personService.findById(1L).get();
 		assertNotNull(response);
-		assertEquals(1L, response.getId());
-		assertEquals("First Name Test0", response.getName());
-		assertEquals("99999999990", response.getCpf());
-		assertEquals("88888888880", response.getRg());
-		assertEquals("9 99999990", response.getCelular());
+		assertEquals(ID, response.getId());
+		assertEquals(FIRST_NAME_TEST0, response.getName());
+		assertEquals(CPF, response.getCpf());
+		assertEquals(RG, response.getRg());
+		assertEquals(CELULAR, response.getCelular());
 		assertNotNull(response);		
+	}
+	
+	@Test
+	void wenFindAllThenReturnAnListOfPersons() {
+		Mockito.when(repository.findAll()).thenReturn(List.of(person));
+		
+		List<Person> response = personService.findAll();
+		
+		assertNotNull(response);
+		assertEquals(1, response.size());
+		assertEquals(Person.class, response.get(0).getClass());
+		
+		assertEquals(ID, response.get(0).getId());
+		assertEquals(FIRST_NAME_TEST0, response.get(0).getName());
+		assertEquals(CPF, response.get(0).getCpf());
+		assertEquals(RG, response.get(0).getRg());				
+		assertEquals(CELULAR, response.get(0).getCelular());
 	}
 
 }
