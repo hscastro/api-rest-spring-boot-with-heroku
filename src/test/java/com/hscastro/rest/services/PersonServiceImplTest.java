@@ -19,8 +19,6 @@ public class PersonServiceImplTest {
 
 	private static final String CELULAR = "982726262";
 
-	private static final String RACA = "parda";
-
 	private static final String SEXO = "Masculino";
 
 	private static final String RG = "78292839291";
@@ -68,9 +66,9 @@ public class PersonServiceImplTest {
 	
 	private void initPersons() {
 		LocalDate localDate       = LocalDate.of(1985, 07, 25);
-		Person person = new Person(ID, NAME, CPF,RG, SEXO, RACA,CELULAR, localDate);
-		PersonDTO personDTO = new PersonDTO(ID, NAME, CPF,RG, SEXO, RACA,CELULAR, localDate);
-		optionalPersons = Optional.of(new Person(ID, NAME, CPF,RG, SEXO, RACA,CELULAR, localDate));		
+		Person person = new Person(ID, NAME, CPF,RG, SEXO, CELULAR, localDate);
+		PersonDTO personDTO = new PersonDTO(ID, NAME, CPF,RG, SEXO,CELULAR, localDate);
+		optionalPersons = Optional.of(new Person(ID, NAME, CPF,RG, SEXO, CELULAR, localDate));		
 		
 	}
 }
