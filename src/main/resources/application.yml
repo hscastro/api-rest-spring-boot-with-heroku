@@ -1,9 +1,9 @@
-spring:
-  application:
-    name: rest-with-spring-boot-java-mysql
+#spring:
+#  application:
+#    name: api-rest-spring-boot-with-heroku
 
-server:
-  port: 8080
+#server:
+#  port: 8080
 
 
 # Database configuration
