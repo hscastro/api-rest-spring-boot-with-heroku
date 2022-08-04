@@ -52,7 +52,6 @@ class PersonServiceTest {
 		MockitoAnnotations.openMocks(this);
 	}
 	
-
 	@Test
 	void testWhenFindById() {
 		Person person = input.mockEntity();
