@@ -28,7 +28,7 @@ public class PersonController {
 		this.personService = personService;
 	}
 
-	@GetMapping("/health")
+	
 	public ResponseEntity<String> getHealth(){
 		return ResponseEntity.ok("UP: "+LocalDateTime.now());
 	}
