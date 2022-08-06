@@ -1,9 +1,0 @@
-com/hscastro/rest/resources/PersonController.class
-com/hscastro/rest/RestWithSpringBootJavaMysqlApplication.class
-com/hscastro/rest/dto/PersonDTO.class
-com/hscastro/rest/domain/Person.class
-com/hscastro/rest/repositories/PersonReposiory.class
-com/hscastro/rest/services/PersonService.class
-com/hscastro/rest/mappers/MapperGenerico.class
-com/hscastro/rest/exceptions/ObjectNotFoundException.class
-com/hscastro/rest/services/PersonServiceImpl.class
