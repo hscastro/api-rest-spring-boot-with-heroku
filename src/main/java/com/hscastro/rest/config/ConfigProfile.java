@@ -15,7 +15,7 @@ public class ConfigProfile {
 	@Autowired
 	private DBService dbTest;
 	
-	@Value("{spring.jpa.hibernate.ddl-auto}")
+	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String ddl;
 	
 	@Bean
