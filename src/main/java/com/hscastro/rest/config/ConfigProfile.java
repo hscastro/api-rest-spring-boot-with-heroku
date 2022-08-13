@@ -15,13 +15,13 @@ public class ConfigProfile {
 	@Autowired
 	private DBService dbTest;
 	
-	@Value("${spring.jpa.hibernate.ddl-auto}")
+	@Value("${spring.jpa.generate-ddl}")
 	private String ddl;
 	
 	@Bean
 	public boolean configDBTest() {
 		
-		if(ddl.equals("create")) {
+		if(ddl.equals("true")) {
 			this.dbTest.instanceDB();
 		}
 		return false;
