@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Profile;
 import com.hscastro.rest.services.DBService;
 	
 
-@Configuration
 @Profile("dev")
+@Configuration
 public class ConfigProfile {
 
 	@Autowired
