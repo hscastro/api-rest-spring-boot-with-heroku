@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RestWithSpringBootJavaMysqlApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void main() {
+		RestWithSpringBootJavaMysqlApplication.main(new String[] { });
 	}
 
 }
